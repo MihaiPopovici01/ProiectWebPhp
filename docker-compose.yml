@@ -1,0 +1,36 @@
+version: '3'
+services:
+    web:
+        image: nginx:latest
+        ports:
+            - "8888:80"
+        volumes:
+            - ./nginx.conf:/etc/nginx/conf.d/nginx.conf
+            - ./Api:/Api
+        depends_on:
+            - php
+        restart: always
+    php:
+        build:
+            context: .
+            dockerfile: PHP.Dockerfile
+        volumes:
+            - ./Api:/Api
+        depends_on:
+            - mysql
+        restart: always
+    mysql:
+        image: mariadb:latest
+        environment:
+            MYSQL_ROOT_PASSWORD: 'password'
+            MYSQL_USER: 'mihai'
+            MYSQL_PASSWORD: 'password'
+            MYSQL_DATABASE: 'slimphp'
+        volumes:
+            - slimphp:/var/lib/mysql
+        ports:
+            - "3306:3306"
+        restart: always
+volumes:
+   slimphp: {}
+        
