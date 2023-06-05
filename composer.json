@@ -1,0 +1,6 @@
+{
+    "require": {
+        "doctrine/dbal": "^3.6",
+        "php-di/php-di": "^7.0"
+    }
+}
